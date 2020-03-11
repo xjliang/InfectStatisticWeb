@@ -11,3 +11,5 @@ spring:
 mybatis:
   mapper-locations: classpath:/mapping/*.xml
   type-aliases-package: edu.fzu.infect.mapper
+  configuration:
+    map-underscore-to-camel-case: true
