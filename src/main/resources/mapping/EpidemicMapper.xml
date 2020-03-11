@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fzu.infect.mapper.EpidemicMapper">
+
+    <select id="selectByObject" parameterType="edu.fzu.infect.domain.EpidemicSituation"
+        resultType="edu.fzu.infect.domain.EpidemicSituation">
+        select *
+        from epidemic_situation
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="provinceCode != null">
+                and province_code = #{provinceCode}
+            </if>
+            <if test="provinceName != null">
+                and province_name = #{provinceName}
+            </if>
+            <if test="startDate != null">
+                and update_date between #{startDate} and #{endDate}
+            </if>
+
+            <if test="newSuspectNum != null">
+                and update_date = #{newSuspectNum}
+            </if>
+            <if test="totalSuspectNum != null">
+                and total_suspect_num = #{totalSuspectNum}
+            </if>
+
+            <if test="newConfirmNum != null">
+                and new_confirm_num = #{newConfirmNum}
+            </if>
+            <if test="totalConfirmNum != null">
+                and total_confirm_num = #{totalConfirmNum}
+            </if>
+
+            <if test="newDeadNum != null">
+                and new_dead_num = #{newDeadNum}
+            </if>
+            <if test="totalDeadNum != null">
+                and total_dead_num = #{totalDeadNum}
+            </if>
+        </where>
+        order by update_date
+    </select>
+
+    <insert id="insertByObject" parameterType="edu.fzu.infect.domain.EpidemicSituation">
+        insert into
+        epidemic_situation(id, province_code, province_name, update_date, new_suspect_num, total_suspect_num, new_confirm_num, total_confirm_num, new_dead_num, total_dead_num)
+        values
+        (#{id}, #{provinceCode}, #{provinceName}, #{updateDate},#{newSuspectNum}, #{totalSuspectNum}, #{newConfirmNum}, #{totalConfirmNum}, #{newDeadNum}, #{totalDeadNum})
+    </insert>
+
+    <delete id="deleteByObject" parameterType="edu.fzu.infect.domain.EpidemicSituation">
+        delete
+        from epidemic_situation
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="provinceCode != null">
+                and province_code = #{provinceCode}
+            </if>
+            <if test="provinceName != null">
+                and province_name = #{provinceName}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+
+            <if test="newSuspectNum != null">
+                and new_suspect_num = #{newSuspectNum}
+            </if>
+            <if test="totalSuspectNum != null">
+                and total_suspect_num = #{totalSuspectNum}
+            </if>
+
+            <if test="newConfirmNum != null">
+                and new_confirm_num = #{newConfirmNum}
+            </if>
+            <if test="totalConfirmNum != null">
+                and total_confirm_num = #{totalConfirmNum}
+            </if>
+
+            <if test="newDeadNum != null">
+                and new_dead_num = #{newDeadNum}
+            </if>
+            <if test="totalDeadNum != null">
+                and total_dead_num = #{totalDeadNum}
+            </if>
+        </where>
+    </delete>
+
+</mapper>
