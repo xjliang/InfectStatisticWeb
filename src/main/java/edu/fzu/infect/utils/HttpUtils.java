@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author xjliang
+ */
 public class HttpUtils {
 
     public static final String HTTP_URL = "https://ncportal.esrichina.com.cn/JKZX/yq_";

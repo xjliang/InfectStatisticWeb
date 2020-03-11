@@ -15,6 +15,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author xjliang
+ */
 @Service
 public class EpidemicServiceImpl implements EpidemicService {
 

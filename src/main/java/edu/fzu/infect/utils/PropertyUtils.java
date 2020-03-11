@@ -11,6 +11,9 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
+/**
+ * @author xjliang
+ */
 public class PropertyUtils {
 
     public static void readPro(String fileName) {
