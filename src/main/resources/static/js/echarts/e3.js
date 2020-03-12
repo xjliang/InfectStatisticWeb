@@ -8,49 +8,48 @@ function firstClickByAllProvince() {
   byAllProvince();
 }
 
-//每日增长比较
 function byAllProvince() {
-  var start = $.trim($("#startDate").val());
-  var end = $.trim($("#endDate").val());
-  var province = $("[name='checkProv']:checked");
+  let start = $.trim($("#startDate").val());
+  let end = $.trim($("#endDate").val());
+  let province = $("[name='checkProv']:checked");
   if (province.length <= 0) {
     xtip.msg('最少选一个省份', {icon: 'e', times: 3, type: 'w'});
     return false;
   }
   $("#pLength").text(province.length);
-  var aX = strToInt($("#aX").val());
-  var bX = strToInt($("#bX").val());
-  if (aX == 0 || bX == 0 || aX > bX || bX > province.length) {
+  const aX = strToInt($("#aX").val());
+  const bX = strToInt($("#bX").val());
+  if (aX === 0 || bX === 0 || aX > bX || bX > province.length) {
     $("#aX").val(1);
     $("#bX").val(province.length);
     xtip.msg('统计的省份范围不正确，系统自动改为1至' + province.length,
         {icon: 'e', times: 3, type: 'w'});
   }
 
-  var arg = {start: start, end: end};
+  var arg = {startDate: start, endDate: end};
   var list = selectByObject(arg);
   if (list != null) {
     let i;
     var dataMap = {};
-    dataMap.newSuspectNum = new Array();
-    dataMap.newConfirmNum = new Array();
-    dataMap.newDeadNum = new Array();
-    dataMap.totalSuspectNum = new Array();
-    dataMap.totalConfirmNum = new Array();
-    dataMap.totalDeadNum = new Array();
-    var provinceTemp = new Array();
+    dataMap.newSuspectNum = [];
+    dataMap.newConfirmNum = [];
+    dataMap.newDeadNum = [];
+    dataMap.totalSuspectNum = [];
+    dataMap.totalConfirmNum = [];
+    dataMap.totalDeadNum = [];
+    var provinceTemp = [];
     for (i = 0; i < province.length; i++) {
       provinceTemp.push(province.eq(i).val());
     }
 
     var dateTemp = getDayBetween(start, end);
     for (i = 0; i < dateTemp.length; i++) {
-      dataMap.newSuspectNum[dateTemp[i]] = new Array();
-      dataMap.newConfirmNum[dateTemp[i]] = new Array();
-      dataMap.newDeadNum[dateTemp[i]] = new Array();
-      dataMap.totalSuspectNum[dateTemp[i]] = new Array();
-      dataMap.totalConfirmNum[dateTemp[i]] = new Array();
-      dataMap.totalDeadNum[dateTemp[i]] = new Array();
+      dataMap.newSuspectNum[dateTemp[i]] = [];
+      dataMap.newConfirmNum[dateTemp[i]] = [];
+      dataMap.newDeadNum[dateTemp[i]] = [];
+      dataMap.totalSuspectNum[dateTemp[i]] = [];
+      dataMap.totalConfirmNum[dateTemp[i]] = [];
+      dataMap.totalDeadNum[dateTemp[i]] = [];
     }
 
     const nowSort = $.trim($("[name='nowSort']:checked").val());

@@ -7,16 +7,16 @@ function byEveryProvince() {
     xtip.msg('选择且只能选择一个省份', {icon: 'e', times: 3, type: 'w'});
     return false;
   }
-  let arg = {start: start, end: end};
+  let arg = {startDate: start, endDate: end};
   let list = selectByObject(arg);
   if (list != null) {
     let i;
-    var newSuspectNum = new Array();
-    var newConfirmNum = new Array();
-    var newDeadNum = new Array();
-    var totalSuspectNum = new Array();
-    var totalConfirmNum = new Array();
-    var totalDeadNum = new Array();
+    let newSuspectNum = [];
+    let newConfirmNum = [];
+    let newDeadNum = [];
+    let totalSuspectNum = [];
+    let totalConfirmNum = [];
+    let totalDeadNum = [];
     let provinceCheck = province.eq(0).val();
     let dateTemp = getDayBetween(start, end);
     for (i = 0; i < dateTemp.length; i++) {

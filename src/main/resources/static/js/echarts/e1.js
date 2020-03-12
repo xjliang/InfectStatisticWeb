@@ -1,27 +1,28 @@
-//每日增长比较
+// 每日增长比较
 function byEveryDay() {
-  var start = $.trim($("#startDate").val());
-  var end = $.trim($("#endDate").val());
-  var province = $("[name='checkProv']:checked");
+  let start = $.trim($("#startDate").val());
+  let end = $.trim($("#endDate").val());
+  let province = $("[name='checkProv']:checked");
   if (province.length <= 0) {
     xtip.msg('最少选一个省份', {icon: 'e', times: 3, type: 'w'});
     return false;
   }
-  var arg = {start: start, end: end};
-  var list = selectByObject(arg);
+  let arg = {startDate: start, endDate: end};
+  let list = selectByObject(arg);
   if (list != null) {
-    var newSuspectNum = new Array();
-    var newConfirmNum = new Array();
-    var newDeadNum = new Array();
-    var totalSuspectNum = new Array();
-    var totalConfirmNum = new Array();
-    var totalDeadNum = new Array();
-    var provinceTemp = new Array();
-    for (var i = 0; i < province.length; i++) {
+    let i;
+    let newSuspectNum = [];
+    let newConfirmNum = [];
+    let newDeadNum = [];
+    let totalSuspectNum = [];
+    let totalConfirmNum = [];
+    let totalDeadNum = [];
+    let provinceTemp = [];
+    for (i = 0; i < province.length; i++) {
       provinceTemp.push(province.eq(i).val());
     }
-    var dateTemp = getDayBetween(start, end);
-    for (var i = 0; i < dateTemp.length; i++) {
+    let dateTemp = getDayBetween(start, end);
+    for (i = 0; i < dateTemp.length; i++) {
       newSuspectNum[dateTemp[i]] = new Array(province.length);
       newConfirmNum[dateTemp[i]] = new Array(province.length);
       newDeadNum[dateTemp[i]] = new Array(province.length);
@@ -32,22 +33,28 @@ function byEveryDay() {
 
     //dataFormatter(obj,provinceTemp,dateTemp);
 
-    for (var i = 0; i < list.length; i++) {
+    for (i = 0; i < list.length; i++) {
       //var provinceCode = list[i].provinceCode;
-      var provinceName = list[i].provinceName;
-      var nowSize = provinceTemp.indexOf(provinceName);
-      if (nowSize != -1) { //1.如果在我选择的省份里
-        newSuspectNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+      let provinceName = list[i].provinceName;
+      let nowSize = provinceTemp.indexOf(provinceName);
+      if (nowSize !== -1) { //1.如果在我选择的省份里
+        newSuspectNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].newSuspectNum, newSuspectNum);
-        newConfirmNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+        newConfirmNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].newConfirmNum, newConfirmNum);
-        newDeadNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+        newDeadNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].newDeadNum, newDeadNum);
-        totalSuspectNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+        totalSuspectNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].totalSuspectNum, totalSuspectNum);
-        totalConfirmNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+        totalConfirmNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].totalConfirmNum, totalConfirmNum);
-        totalDeadNum = returnDataList(nowSize, list[i].updateDate.substring(0, 10),
+        totalDeadNum = returnDataList(nowSize,
+            list[i].updateDate.substring(0, 10),
             provinceName, list[i].totalDeadNum, totalDeadNum);
       }
     }
@@ -67,22 +74,24 @@ function byEveryDay() {
   }
 }
 
-function returnDataList(nowSize, updateDate, provinceName, listidata, xz_Lj) {
-  var max = 0;
-  var sum = 0;
-  var size = nowSize;//xz_Lj[updateDate].length;
+function returnDataList(nowSize, updateDate, provinceName, listidata,
+    newTotal) {
+  let max = 0;
+  let sum = 0;
+  let size = nowSize;
   max = Math.max(max, listidata);
   sum += listidata;
-  xz_Lj[updateDate][size] = {
+  newTotal[updateDate][size] = {
     name: provinceName,
     value: listidata
   };
-  xz_Lj[updateDate + 'max'] = Math.floor(max / 100) * 100;
-  xz_Lj[updateDate + 'sum'] = sum;
-  return xz_Lj;
+  newTotal[updateDate + 'max'] = Math.floor(max / 100) * 100;
+  newTotal[updateDate + 'sum'] = sum;
+  return newTotal;
 }
 
 function e1(dateTemp, provinceTemp, dataMap) {
+  let i;
   clearChartFunc();
   var optionsArr = [];
 
@@ -91,7 +100,7 @@ function e1(dateTemp, provinceTemp, dataMap) {
     formatter = '{a}  {c}';
   }
   var seriesTypeData = [];
-  for (var i = 0; i < legendData.length; i++) {
+  for (i = 0; i < legendData.length; i++) {
     seriesTypeData.push(
         {
           name: legendData[i], label: {
@@ -114,10 +123,10 @@ function e1(dateTemp, provinceTemp, dataMap) {
         })
   }
 
-  for (var i = 0; i < dateTemp.length; i++) {
-    var title = dateTemp[i] + "新型肺炎情况";
-    var sums = dateTemp[i] + "sum";
-    var seriesData = [
+  for (i = 0; i < dateTemp.length; i++) {
+    let title = dateTemp[i] + "新型肺炎情况";
+    let sums = dateTemp[i] + "sum";
+    let seriesData = [
       {data: dataMap.totalSuspectNum[dateTemp[i]]},
       {data: dataMap.totalConfirmNum[dateTemp[i]]},
       {data: dataMap.totalDeadNum[dateTemp[i]]},
@@ -145,9 +154,9 @@ function e1(dateTemp, provinceTemp, dataMap) {
         }
     )
   }
-  var readSpeech = $.trim($("#readSpeech").val());
+  let readSpeech = $.trim($("#readSpeech").val());
   readSpeech = readSpeech * 1000;
-  var optionE1 = {
+  let optionE1 = {
     baseOption: {
       timeline: {
         axisType: 'category',
@@ -210,4 +219,3 @@ function e1(dateTemp, provinceTemp, dataMap) {
   };
   chartFunc(optionE1);
 }
-

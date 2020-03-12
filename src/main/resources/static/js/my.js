@@ -7,7 +7,7 @@ var chartDataPath = "数据来自国家卫健委和各省卫健委通报";
 var legendData = ['累计疑似', '累计确诊', '累计死亡', '新增疑似', '新增确诊', '新增死亡'];
 $(function () {
   hideDiv("#bigChartDiv");
-  hide123();
+  hideAllCharts();
 })
 
 function clickChartIs() {
@@ -20,6 +20,9 @@ function clickChartIs() {
   if ($("#hide3").is(':visible')) {　　//如果node是显示的则隐藏node元素，否则显示
     byAllProvince();
   }
+  if ($("#hide4").is(':visible')) {　　//如果node是显示的则隐藏node元素，否则显示
+    showChinaMap();
+  }
 }
 
 function showDiv(a) {
@@ -30,28 +33,35 @@ function hideDiv(a) {
   $(a).hide();
 }
 
-function hide123() {
+function hideAllCharts() {
   $("#hide1").hide();
   $("#hide2").hide();
   $("#hide3").hide();
+  $("#hide4").hide();
 }
 
 function showHide1() {
-  hide123();
+  hideAllCharts();
   $("#echartsName").html("每日增长比较");
   $("#hide1").show();
 }
 
 function showHide2() {
-  hide123();
+  hideAllCharts();
   $("#echartsName").html("各省走势图");
   $("#hide2").show();
 }
 
 function showHide3() {
-  hide123();
+  hideAllCharts();
   $("#echartsName").html("各省比较图");
   $("#hide3").show();
+}
+
+function showHide4() {
+  hideAllCharts();
+  $("#echartsName").html("疫情地图");
+  $("#hide4").show();
 }
 
 var loadId;
@@ -164,9 +174,10 @@ function chartFunc(op) {
       $("#bigChartDiv").css("background-color","#f3f3f3");
   }*/
   var dom = document.getElementById(nowChartIs);
-  var myChart = echarts.init(dom, theme);
+  // var myChart = echarts.init(dom, theme);
+  var myChart = echarts.init(dom);
   myChart.setOption(op); //静态数据加载
-
+  var test;
 }
 
 function clearChartFunc() {
