@@ -95,12 +95,12 @@ a{
 	font-size: 0.75rem;
 	padding: 0 1.125rem;
   }
-  
+
   .monitor .tabs a:first-child{
 	border-right: 0.083rem solid #00f2f1;
 	padding-left: 0;
   }
-  
+
   .monitor .tabs a.active{
 	color: #fff;
   }
@@ -135,7 +135,7 @@ a{
   position: absolute;
   top: 1.6rem;
   bottom: 0;
-  width: 100%; 
+  width: 100%;
   overflow: scroll;
 }
 
@@ -164,17 +164,17 @@ a{
 .monitor .marquee-view{
 	position: absolute;
 	top: 1.6rem;
-	bottom: 0; 
-	width: 100%; 
+	bottom: 0;
+	width: 100%;
 	overflow: hidden;
   }
-  
+
   .monitor .row{
 	line-height: 1.05;
 	padding: 0.5rem 1.5rem;
 	color: #61a8ff;
 	font-size: 0.5rem;
-	position: relative; 
+	position: relative;
 	display: flex;
 	justify-content: space-between;
   }
@@ -185,7 +185,7 @@ a{
   .monitor .row:hover .icon-dot{
 	opacity: 1;
   }
-  
+
   .monitor .icon-dot{
 	position: absolute;
 	left: 0.64rem;
@@ -209,7 +209,7 @@ a{
 }
 /* 点位 */
 .point {
-  height: 14.167rem;
+  height: 17.167rem;
 }
 .point .chart {
   display: flex;
