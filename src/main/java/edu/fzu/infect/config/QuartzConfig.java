@@ -47,17 +47,15 @@ public class QuartzConfig {
      *
      * @throws FileNotFoundException
      */
-//    @Scheduled(cron = "0 0 0/6 * * ?")
-    @Scheduled(cron = "0 03 11 * * ?")
+    @Scheduled(cron = "0 0 0/6 * * ?")
+    // @Scheduled(cron = "0 03 11 * * ?")
     private void updateYqInformation() throws FileNotFoundException {
         log.info("更新疫情数据");
         String serverPath = ResourceUtils.getURL("classpath:property").getPath();
         String day = MyUtils.getYesterdayByDate();
-        // String day = MyUtils.dateToStr(new Date(),"yyyyMMdd");
         String lastDay = PropertyUtils.readByKey(serverPath + "/my.properties", "lastDay");
         List<String> list = MyUtils.getDays(lastDay, day, "yyyyMMdd");
         for (String str : list) {
-            // if(!str.equals(day) && !str.equals(lastDay)){   //抛去首尾
             int i = epidemicService.insertAll(str);
             if (i != -1) {
                 // 得到当前的确诊人数
@@ -81,7 +79,6 @@ public class QuartzConfig {
                 map.put("totalDeadNum", totalDeadNum.toString());
                 PropertyUtils.savePro(serverPath + "/my.properties", map);
             }
-            // }
         }
     }
 }
