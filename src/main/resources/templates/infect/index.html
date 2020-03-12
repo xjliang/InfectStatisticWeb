@@ -122,6 +122,9 @@
           <span>结束日期： </span><input id="endDate" type="text" value="" readonly>
           <br>
           <div class="myBtn">
+            <button onclick="showChinaMap()"
+                    class="button button--ujarak button--border-thin button--text-thick"
+                    data-text="疫情地图"><span>疫情地图</span></button>
             <button onclick="byEveryDay()"
                     class="button button--ujarak button--border-thin button--text-thick"
                     data-text="每日增长比较"><span>每日增长比较</span></button>
@@ -136,7 +139,6 @@
       </div>
     </div>
 
-    <!--监控-->
     <div class="monitor panel">
       <div class="inner">
         <div class="tabs">
@@ -231,6 +233,11 @@
           <br>
         </div>
 
+        <div id="hide4">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <br>
+        </div>
+
       </h3>
       <div class="chart">
         <div class="geo" id="myChart1"></div>
@@ -247,6 +254,7 @@
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/echarts/echarts.min.js}"></script>
+<script th:src="@{/js/echarts/china.js}"></script>
 <script type="text/javascript" th:src="@{/js/xtiper.min.js}"></script>
 
 <script type="text/javascript" th:src="@{/js/my.js?v=ver(ver=${reportModel.lastUpdateDay})}"></script>
@@ -256,6 +264,8 @@
         th:src="@{/js/echarts/e2.js?v=ver(ver=${reportModel.lastUpdateDay})}"></script>
 <script type="text/javascript"
         th:src="@{/js/echarts/e3.js?v=ver(ver=${reportModel.lastUpdateDay})}"></script>
+<script type="text/javascript"
+        th:src="@{/js/echarts/e4.js?v=ver(ver=${reportModel.lastUpdateDay})}"></script>
 <!--
 <script type="text/javascript" th:src="@{/js/mymap.js}"></script>
 -->
@@ -286,7 +296,7 @@
 
   function selectByObject(arg) {
     var url = getPath() + "/selectByObject";
-    arg.note = returnCitySN["cip"] + " " + lo + " " + lc; //returnCitySN["cname"];
+    // arg.note = returnCitySN["cip"] + " " + lo + " " + lc; //returnCitySN["cname"];
     var list;
     $.ajax({
       url: url,
