@@ -44,7 +44,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![](https://github.com/xjliang/InfectStatisticWeb/blob/master/assets/overview.png?raw=true)](https://example.com)
 
 
 | Homework Link         | [https://edu.cnblogs.com/campus/fzu/2020SPRINGS/homework/10460](https://edu.cnblogs.com/campus/fzu/2020SPRINGS/homework/10460) |
@@ -54,7 +54,7 @@
 
 At present, the epidemic situation of new coronavirus pneumonia has come to a very critical period. Schools are stilll waiting for its ending. A statistics website will provide a corresponding log text every day to record the situation of the provinces in the country the previous day.
 
-The previous epidemic statistics results are only displayed in text. which is not Intutive and specific. In the project, we can visually display the general distribution of the epidemic situation int the form of charts, and we can check the epidemic statistics of specific privinces.
+The previous [epidemic statistics](https://github.com/xjliang/InfectStatistic-main) results are only displayed in text. which is not Intutive and specific. In the project, we can visually display the general distribution of the epidemic situation int the form of charts, and we can check the epidemic statistics of specific privinces.
 
 **1. Use different colors on the national map to represent the approximate number of confirmed people**
 
@@ -79,8 +79,6 @@ The previous epidemic statistics results are only displayed in text. which is no
 
 
 ### Screenshots
-
-![](https://github.com/xjliang/InfectStatisticWeb/blob/master/assets/overview.png?raw=true)
 
 - show infect map chart
 
@@ -142,13 +140,29 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
+
+- Java JDK
+- MySQL
+
 ### Installation
 
-2. Clone the repo
+1. Clone the repo
+
 ```sh
 $ git clone https://github.com/xjliang/InfectStatisticWeb.git
 ```
-2. Build an executable JAR
+2. Import sql script: [infect_statistic.sql](https://github.com/xjliang/InfectStatisticWeb/tree/master/sql/infect_statistic.sql)
+
+```mysql
+$ mysql -uroot -p
+mysql > create database `infect_statistic`;
+mysql > exit
+$ mysql -uroot -p infect_statistic < <this repo localtion>/sql/infect_statistic.sql
+```
+
+**NOTE**: you should check the datasource configuration in [application.yml](https://github.com/xjliang/InfectStatisticWeb/blob/master/src/main/resources/application.yml), where username and password are differ from everyone.
+
+1. Build an executable JAR
 
 ```sh
 $ mvn clean package
