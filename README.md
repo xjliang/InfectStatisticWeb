@@ -74,7 +74,7 @@ The previous [epidemic statistics](https://github.com/xjliang/InfectStatistic-ma
 
 ### Online Demo
 
-[http://118.178.139.122:8080/infect/epidemic/total](http://118.178.139.122:8080/infect/epidemic/total) (this demo will get expired aftere 2020-04-13)
+[http://118.178.139.122:8080/infect/epidemic/overview](http://118.178.139.122:8080/infect/epidemic/overview) (this demo will get expired aftere 2020-04-13)
 
 
 

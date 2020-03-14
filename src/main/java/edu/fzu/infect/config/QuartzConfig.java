@@ -50,7 +50,7 @@ public class QuartzConfig {
      * @throws FileNotFoundException
      */
      @Scheduled(cron = "0 0 0/6 * * ?")
-//    @Scheduled(cron = "0 14 15 * * ?")
+//    @Scheduled(cron = "0 46 15 * * ?")
     private void updateYqInformation() throws FileNotFoundException {
         log.info("开始更新疫情数据");
         String serverPath = ResourceUtils.getURL("classpath:property").getPath();

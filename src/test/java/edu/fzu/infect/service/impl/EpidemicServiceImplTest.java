@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import edu.fzu.infect.domain.TimeRange;
 import edu.fzu.infect.generator.EpidemicSituation;
+import edu.fzu.infect.generator.EpidemicSituationExample;
+import edu.fzu.infect.generator.EpidemicSituationMapper;
 import edu.fzu.infect.service.EpidemicService;
 import edu.fzu.infect.utils.MyUtils;
 import java.util.Date;
@@ -21,6 +23,9 @@ public class EpidemicServiceImplTest {
     @Autowired
     private EpidemicService epidemicService;
 
+    @Autowired
+    private EpidemicSituationMapper epidemicSituationMapper;
+
     @Test
     public void selectByTimeRange() {
         String dateStr = "20200310";
@@ -32,8 +37,19 @@ public class EpidemicServiceImplTest {
     }
 
     @Test
+    public void deleteByDate() {
+        EpidemicSituation d = new EpidemicSituation();
+        Date currentDate = MyUtils.strToDate("20200117", MyUtils.USER_DATE_FORMAT);;
+        d.setUpdateDate(currentDate);
+
+        EpidemicSituationExample epidemicSituationExample = new EpidemicSituationExample();
+        epidemicSituationExample.createCriteria().andUpdateDateEqualTo(currentDate);
+        epidemicSituationMapper.deleteByExample(epidemicSituationExample);
+    }
+
+    @Test
     public void insertAll() {
-        int result = epidemicService.insertAll("20200310");
+        int result = epidemicService.insertAll("20200117");
         System.out.println(result);
     }
 }
