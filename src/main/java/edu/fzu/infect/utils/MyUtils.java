@@ -14,6 +14,9 @@ import java.util.UUID;
  */
 public class MyUtils {
 
+    public static final String SQL_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String USER_DATE_FORMAT = "yyyyMMdd";
+
     /**
      * 自动生成 uuid
      * @return
@@ -98,6 +101,7 @@ public class MyUtils {
 
             Calendar tempStart = Calendar.getInstance();
             tempStart.setTime(start);
+            tempStart.add(Calendar.DATE, +1);
 
             Calendar tempEnd = Calendar.getInstance();
             tempEnd.setTime(end);

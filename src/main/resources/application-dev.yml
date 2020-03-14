@@ -12,8 +12,8 @@ spring:
     prefix: classpath:/templates/
 
 mybatis:
-  mapper-locations: classpath:/mapping/*.xml
-  type-aliases-package: edu.fzu.infect.domain
+  mapper-locations: classpath:/generator/*.xml
+  type-aliases-package: edu.fzu.infect.generator
   configuration:
     map-underscore-to-camel-case: true
 

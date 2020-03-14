@@ -7,8 +7,8 @@ function byEveryProvince() {
     xtip.msg('选择且只能选择一个省份', {icon: 'e', times: 3, type: 'w'});
     return false;
   }
-  let arg = {startDate: start, endDate: end};
-  let list = selectByObject(arg);
+  let arg = {startDateStr: start, endDateStr: end, dateFormat: "yyyy-MM-dd"};
+  let list = selectByTimeRange(arg);
   if (list != null) {
     let i;
     let newSuspectNum = [];

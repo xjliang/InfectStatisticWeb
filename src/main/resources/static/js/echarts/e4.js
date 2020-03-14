@@ -1,8 +1,8 @@
 function showChinaMap() {
   // let start = $.trim($("#startDate").val());
   let end = $.trim($("#endDate").val());
-  let arg = {startDate: end, endDate: end};
-  let list = selectByObject(arg);
+  let arg = {startDateStr: end, endDateStr: end, dateFormat: "yyyy-MM-dd"};
+  let list = selectByTimeRange(arg);
 
   let mapData = list.map(item => ({
     name: item.provinceName.substring(0, 2),

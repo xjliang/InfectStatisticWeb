@@ -1,15 +1,15 @@
 package edu.fzu.infect.service;
 
-import edu.fzu.infect.domain.EpidemicSituation;
+import edu.fzu.infect.domain.TimeRange;
+import edu.fzu.infect.generator.EpidemicSituation;
+import java.util.Date;
 import java.util.List;
 
 public interface EpidemicService {
 
-    List<EpidemicSituation> selectByObject(EpidemicSituation dto);
+    List<EpidemicSituation> selectByTimeRange(TimeRange timeRange);
 
-    int insertByObject(EpidemicSituation dto);
-
-    int deleteByObject(EpidemicSituation dto);
+    int insert(EpidemicSituation record);
 
     int insertAll(String date);
 }

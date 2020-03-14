@@ -2,8 +2,10 @@ package edu.fzu.infect.service.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import edu.fzu.infect.domain.EpidemicSituation;
-import edu.fzu.infect.mapper.EpidemicMapper;
+import edu.fzu.infect.domain.TimeRange;
+import edu.fzu.infect.generator.EpidemicSituation;
+import edu.fzu.infect.generator.EpidemicSituationExample;
+import edu.fzu.infect.generator.EpidemicSituationMapper;
 import edu.fzu.infect.service.EpidemicService;
 import edu.fzu.infect.utils.HttpUtils;
 import edu.fzu.infect.utils.MyUtils;
@@ -13,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author xjliang
@@ -22,22 +23,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class EpidemicServiceImpl implements EpidemicService {
 
     @Resource
-    private EpidemicMapper epidemicMapper;
+    private EpidemicSituationMapper epidemicSituationMapper;
 
     @Override
-    public List<EpidemicSituation> selectByObject(EpidemicSituation dto) {
-        return epidemicMapper.selectByObject(dto);
+    public List<EpidemicSituation> selectByTimeRange(TimeRange range) {
+        EpidemicSituationExample epidemicSituationExample = new EpidemicSituationExample();
+        epidemicSituationExample.createCriteria().andUpdateDateBetween(range.getStartDate(), range.getEndDate());
+        return epidemicSituationMapper.selectByExample(epidemicSituationExample);
     }
 
     @Override
-    @Transactional
-    public int insertByObject(EpidemicSituation dto) {
-        return epidemicMapper.insertByObject(dto);
-    }
-
-    @Override
-    public int deleteByObject(EpidemicSituation dto) {
-        return epidemicMapper.deleteByObject(dto);
+    public int insert(EpidemicSituation record) {
+        return epidemicSituationMapper.insert(record);
     }
 
     @Override
@@ -53,28 +50,30 @@ public class EpidemicServiceImpl implements EpidemicService {
         List<Map<String, Object>> features = (List<Map<String, Object>>) map.get("features");
         Date currentDate = MyUtils.strToDate(httpArg, "yyyyMMdd");
 
-        // 1.删除当天的数据
+        // 1. delete current data
         EpidemicSituation d = new EpidemicSituation();
         d.setUpdateDate(currentDate);
-        epidemicMapper.deleteByObject(d);
-//        String note = "添加时间为：" + MyUtils.dateToStr(new Date(), "yyyy-MM-dd HH:mm:ss");
 
-        // 2.更新数据
+        EpidemicSituationExample epidemicSituationExample = new EpidemicSituationExample();
+        epidemicSituationExample.createCriteria().andUpdateDateEqualTo(currentDate);
+        epidemicSituationMapper.deleteByExample(epidemicSituationExample);
+
+        // 2. update data
         for (Map<String, Object> f : features) {
             Map<String, Object> p = (Map<String, Object>) f.get("properties");
-            EpidemicSituation dto = new EpidemicSituation();
-            dto.setId(httpArg + MyUtils.getUUID32());
-            dto.setUpdateDate(currentDate);
-            dto.setProvinceCode("" + MyUtils.doubleToInt((Double) p.get("adcode")));
-            dto.setProvinceName((String) p.get("name"));
-            dto.setNewSuspectNum(MyUtils.doubleToInt((Double) p.get("新增疑似")));
-            dto.setTotalSuspectNum(MyUtils.doubleToInt((Double) p.get("累计疑似")));
-            dto.setNewConfirmNum(MyUtils.doubleToInt((Double) p.get("新增确诊")));
-            dto.setTotalConfirmNum(MyUtils.doubleToInt((Double) p.get("累计确诊")));
-            dto.setNewDeadNum(MyUtils.doubleToInt((Double) p.get("新增死亡")));
-            dto.setTotalDeadNum(MyUtils.doubleToInt((Double) p.get("累计死亡")));
+            EpidemicSituation record = new EpidemicSituation();
+            record.setId(httpArg + MyUtils.getUUID32());
+            record.setUpdateDate(currentDate);
+            record.setProvinceCode("" + MyUtils.doubleToInt((Double) p.get("adcode")));
+            record.setProvinceName((String) p.get("name"));
+            record.setNewSuspectNum(MyUtils.doubleToInt((Double) p.get("新增疑似")));
+            record.setTotalSuspectNum(MyUtils.doubleToInt((Double) p.get("累计疑似")));
+            record.setNewConfirmNum(MyUtils.doubleToInt((Double) p.get("新增确诊")));
+            record.setTotalConfirmNum(MyUtils.doubleToInt((Double) p.get("累计确诊")));
+            record.setNewDeadNum(MyUtils.doubleToInt((Double) p.get("新增死亡")));
+            record.setTotalDeadNum(MyUtils.doubleToInt((Double) p.get("累计死亡")));
 
-            epidemicMapper.insertByObject(dto);
+            epidemicSituationMapper.insert(record);
         }
         return features.size();
     }

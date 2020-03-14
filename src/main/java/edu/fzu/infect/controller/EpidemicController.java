@@ -1,6 +1,7 @@
 package edu.fzu.infect.controller;
 
-import edu.fzu.infect.domain.EpidemicSituation;
+import edu.fzu.infect.generator.EpidemicSituation;
+import edu.fzu.infect.domain.TimeRange;
 import edu.fzu.infect.service.CityDataService;
 import edu.fzu.infect.service.EpidemicService;
 import edu.fzu.infect.utils.PropertyUtils;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,12 +32,12 @@ public class EpidemicController {
     @Autowired
     private CityDataService cityDataService;
 
-    @PostMapping(value = "selectByObject")
-    public List<EpidemicSituation> selectByObject(EpidemicSituation dto) {
-        return epidemicService.selectByObject(dto);
+    @PostMapping("/selectByTimeRange")
+    public List<EpidemicSituation> selectByTimeRange(TimeRange range) {
+        return epidemicService.selectByTimeRange(range);
     }
 
-    @GetMapping("/total")
+    @GetMapping("/overview")
     public ModelAndView total(Model model) throws Exception {
         String serverPath = ResourceUtils.getURL("classpath:property").getPath();
         log.info(serverPath);

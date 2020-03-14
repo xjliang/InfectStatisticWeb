@@ -2,9 +2,11 @@ package edu.fzu.infect.service.impl;
 
 import static org.junit.Assert.*;
 
-import edu.fzu.infect.domain.EpidemicSituation;
+import edu.fzu.infect.domain.TimeRange;
+import edu.fzu.infect.generator.EpidemicSituation;
 import edu.fzu.infect.service.EpidemicService;
 import edu.fzu.infect.utils.MyUtils;
+import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,31 +22,18 @@ public class EpidemicServiceImplTest {
     private EpidemicService epidemicService;
 
     @Test
-    public void selectByObject() {
-        EpidemicSituation epidemicSituation = new EpidemicSituation();
-        epidemicSituation.setStartDate("20200309");
-        epidemicSituation.setEndDate("20200309");
-        List<EpidemicSituation> epidemicSituations = epidemicService.selectByObject(epidemicSituation);
+    public void selectByTimeRange() {
+        String dateStr = "20200310";
+        TimeRange timeRange = new TimeRange(dateStr, dateStr, MyUtils.USER_DATE_FORMAT);
+        List<EpidemicSituation> epidemicSituations = epidemicService.selectByTimeRange(timeRange);
         for (EpidemicSituation situation : epidemicSituations) {
-            System.out.println(situation);
+            System.out.println(situation.getProvinceName() + " " + situation.getUpdateDate());
         }
     }
 
     @Test
-    public void insertByObject() {
-
-    }
-
-    @Test
-    public void deleteByObject() {
-        EpidemicSituation d = new EpidemicSituation();
-        d.setUpdateDate(MyUtils.strToDate("20200212", "yyyyMMdd"));
-        epidemicService.deleteByObject(d);
-    }
-
-    @Test
     public void insertAll() {
-        int result = epidemicService.insertAll("20200307");
+        int result = epidemicService.insertAll("20200310");
         System.out.println(result);
     }
 }

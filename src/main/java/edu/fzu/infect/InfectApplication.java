@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author xjliang
  */
 @SpringBootApplication
-@MapperScan(basePackages = "edu.fzu.infect.mapper")
+@MapperScan(basePackages = "edu.fzu.infect.generator")
 @EnableScheduling
 public class InfectApplication {
 

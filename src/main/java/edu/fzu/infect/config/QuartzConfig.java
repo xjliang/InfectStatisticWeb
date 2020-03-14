@@ -1,11 +1,13 @@
 package edu.fzu.infect.config;
 
-import edu.fzu.infect.domain.EpidemicSituation;
+import edu.fzu.infect.generator.EpidemicSituation;
+import edu.fzu.infect.domain.TimeRange;
 import edu.fzu.infect.service.EpidemicService;
 import edu.fzu.infect.utils.MyUtils;
 import edu.fzu.infect.utils.PropertyUtils;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,22 +49,19 @@ public class QuartzConfig {
      *
      * @throws FileNotFoundException
      */
-    @Scheduled(cron = "0 0 0/6 * * ?")
-    // @Scheduled(cron = "0 03 11 * * ?")
+     @Scheduled(cron = "0 0 0/6 * * ?")
+//    @Scheduled(cron = "0 14 15 * * ?")
     private void updateYqInformation() throws FileNotFoundException {
-        log.info("更新疫情数据");
+        log.info("开始更新疫情数据");
         String serverPath = ResourceUtils.getURL("classpath:property").getPath();
         String day = MyUtils.getYesterdayByDate();
         String lastDay = PropertyUtils.readByKey(serverPath + "/my.properties", "lastDay");
-        List<String> list = MyUtils.getDays(lastDay, day, "yyyyMMdd");
+        List<String> list = MyUtils.getDays(lastDay, day, MyUtils.USER_DATE_FORMAT);
         for (String str : list) {
             int i = epidemicService.insertAll(str);
             if (i != -1) {
                 // 得到当前的确诊人数
-                EpidemicSituation dto = new EpidemicSituation();
-                dto.setStartDate(str);
-                dto.setEndDate(str);
-                List<EpidemicSituation> listByDay = epidemicService.selectByObject(dto);
+                List<EpidemicSituation> listByDay = epidemicService.selectByTimeRange(new TimeRange(str, str, MyUtils.USER_DATE_FORMAT));
                 BigDecimal totalSuspectNum = new BigDecimal(0);
                 BigDecimal totalConfirmNum = new BigDecimal(0);
                 BigDecimal totalDeadNum = new BigDecimal(0);
@@ -80,5 +79,6 @@ public class QuartzConfig {
                 PropertyUtils.savePro(serverPath + "/my.properties", map);
             }
         }
+        log.info("疫情数据更新完成");
     }
 }

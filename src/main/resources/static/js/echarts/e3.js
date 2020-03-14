@@ -26,8 +26,8 @@ function byAllProvince() {
         {icon: 'e', times: 3, type: 'w'});
   }
 
-  var arg = {startDate: start, endDate: end};
-  var list = selectByObject(arg);
+  let arg = {startDateStr: start, endDateStr: end, dateFormat: "yyyy-MM-dd"};
+  var list = selectByTimeRange(arg);
   if (list != null) {
     let i;
     var dataMap = {};
