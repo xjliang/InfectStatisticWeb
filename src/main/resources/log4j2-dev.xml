@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <Appenders>
+        <Console name="SlowConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36}.%M() @%L - %msg%n}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}"/>
+        </Console>
+
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="[%-5p] %d %c - %m%n" />
+        </Console>
+
+        <RollingFile name="runtimeFile" fileName="./logs/infect-statistic.log" filePattern="./logs/infect-statistic-%d{yyyy-MM-dd}.log"
+            append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS Z}\t%level\t%class\t%line\t%thread\t%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <!-- 此行以下为自动清理日志的配置 -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="./logs">
+                    <!-- glob 项为需要自动清理日志的pattern -->
+                    <IfFileName glob="*.log"/>
+                    <!-- 30d 表示自动清理掉30天以前的日志文件 -->
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <!-- 此行以上为自动清理日志的配置 -->
+        </RollingFile>
+
+        <RollingFile name="accessLog" fileName="./logs/infect-statistic-accessLog.log" filePattern="./logs/infect-statistic-accessLog-%d{yyyy-MM-dd}.log"
+            append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS Z}\t%level\t%class\t%line\t%thread\t%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <!-- 此行以下为自动清理日志的配置 -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="./logs">
+                    <!-- glob 项为需要自动清理日志的pattern -->
+                    <IfFileName glob="*.log"/>
+                    <!-- 30d 表示自动清理掉30天以前的日志文件 -->
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <!-- 此行以上为自动清理日志的配置 -->
+        </RollingFile>
+
+
+    </Appenders>
+
+    <Loggers>
+        <logger name="edu.fzu.infect.config.accesslog.AccessLogInterceptor" level="info" additivity="false">
+            <AppenderRef ref="accessLog" />
+        </logger>
+        <root level="info">
+            <AppenderRef ref="SlowConsole" />
+            <AppenderRef ref="runtimeFile" />
+        </root>
+    </Loggers>
+
+</configuration>
